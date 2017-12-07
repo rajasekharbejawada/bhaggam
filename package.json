@@ -1,0 +1,25 @@
+{
+  "name":"traffic-simulator-kit",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "mqtt": "1.0.5",
+    "xml2js": "0.4.4",
+    "node-vincenty": "0.0.6",
+    "optimist": "0.6.1",
+    "express": ">=3.4.7 <4",
+    "https":"1.0.0",
+    "url":"0.11.0",
+    "cfenv": "1.0.x",
+    "q": "1.4.1",
+    "socket.io": "^1.3.7",
+    "nano" : "*"
+  },
+  "engines": {
+        "node": "0.10.x"
+  },
+  "repository": {}
+}

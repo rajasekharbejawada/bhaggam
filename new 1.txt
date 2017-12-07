@@ -1,0 +1,46 @@
+
+namespace com.ibm.streamsx.slack.sample.CustomIconEmoji ;
+
+use com.ibm.streamsx.slack::SendSlackMessage ;
+
+composite Main
+{
+	graph
+		
+		stream<int32 iteration> GenerateTemperature = Beacon()
+		{
+			param
+				period : 180.0 ;
+				
+			output
+				GenerateIteration: iteration = (int32) IterationCount() + 1;
+		}
+
+		
+		stream<rstring message, rstring iconEmoji> GenerateTemperature of 3 = Custom(GenerateIteration)
+		{
+			logic
+				onTuple GenerateTemperature :
+				{
+					if (GenerateIteration.iteration % 3  ==  1) {
+						submit({message = " Temperature is warm now can u have now#" + (rstring) GenerateIteration.iteration,
+								iconEmoji = ":candy:"}, GenerateMessage);
+					} else if (GenerateIteration.iteration % 3 == 2) {
+						submit({message = "Temperature is hot now u have now#" + (rstring) GenerateIteration.iteration,
+								iconEmoji = ":dango:"}, GenerateMessage);
+					} else if (GenerateIteration.iteration % 3 == 0) {
+						submit({message = "Temperature is cool now can u have now #" + (rstring) GenerateIteration.iteration,
+								iconEmoji = ":fish_cake:"}, GenerateMessage);
+					}
+				}
+		}
+		
+		
+		() as SendMessage = SendSlackMessage(GenerateMessage)
+		{
+			param
+				slackUrl : getSubmissionTimeValue("slackUrl") ;
+				iconEmojiAttribute : iconEmoji ;
+		}
+
+}

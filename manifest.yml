@@ -1,0 +1,9 @@
+applications:
+- host: <your_app>-trafficsim
+  disk: 128M
+  name: <your_app>-trafficsim
+  command: node app.js
+  path: .
+  domain: mybluemix.net
+  memory: 128M
+  instances: 1
